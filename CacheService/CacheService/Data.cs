@@ -46,6 +46,11 @@ namespace CacheService
             UpdateStations(city);
         }
 
+        public String GetStations()
+        {
+            return stations;
+        }
+
         public void UpdateStations(String city)
         {
             stations = SendRequest("https://api.jcdecaux.com/vls/v3/stations?contract=" + city + "&apiKey=92f94affefba484f0cf2d1c44d26582943d7cee8");

@@ -8,12 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
+
 namespace Client
 {
-    using CacheService;
+    using RouteService;
     public partial class Form1 : Form
     {
-        CacheServiceClient client;
+        RouteServiceClient client;
         public Form1()
         {
             InitializeComponent();
@@ -22,9 +23,9 @@ namespace Client
 
         private void Init()
         {
-            client = new CacheServiceClient();
+            client = new RouteServiceClient();
             client.InitCache();
-            string[] cities = client.GetCities();
+            String[] cities = client.GetCities();
             foreach(var obj in cities)
             {
                 selectCity.Items.Add(obj);
@@ -33,7 +34,16 @@ namespace Client
 
         private void selectCity_SelectedIndexChanged(object sender, EventArgs e)
         {
-            client.InitCity(selectCity.SelectedItem.ToString());
+            //client.InitCity(selectCity.SelectedItem.ToString());
+        }
+
+        private void searchRoute_Click(object sender, EventArgs e)
+        {
+            String originAddress = origin.Text;
+            String destinationAddress = destination.Text;
+            System.Diagnostics.Debug.WriteLine(originAddress + " " + destinationAddress);
+            //if(!(String.Equals(originAddress, "Entrez une adresse de départ") && String.Equals(originAddress, "Entrez une adresse de destination")))
+                
         }
     }
 }

@@ -31,9 +31,9 @@ namespace CacheService
             return data.GetCities();
         }
 
-        public Data GetData()
+        public String GetStations()
         {
-            return data;
+            return data.GetStations();
         }
 
 

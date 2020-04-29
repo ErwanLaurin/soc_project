@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 
-using System.ServiceModel;
-using CacheService;
-
-namespace CacheService
+namespace RouteService
 {
-
     [ServiceContract]
-    interface ICacheService
+    interface IRouteService
     {
         [OperationContract]
         void InitCache();
@@ -19,11 +16,9 @@ namespace CacheService
         void InitCity(String city);
 
         [OperationContract]
-        List<String> GetCities();
+        void SearchRoute(String origin, String destination, String stations);
 
         [OperationContract]
-        String GetStations();
-
-        
+        String[] GetCities();
     }
 }
