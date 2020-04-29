@@ -43,7 +43,8 @@ namespace Client
             String destinationAddress = destination.Text;
             //System.Diagnostics.Debug.WriteLine(originAddress + " " + destinationAddress);
             if (!(String.Equals(originAddress, "Entrez une adresse de départ") && String.Equals(originAddress, "Entrez une adresse de destination")))
-                System.Diagnostics.Debug.WriteLine(client.SearchRoute(originAddress, destinationAddress));
+                result.Text = client.SearchRoute(originAddress, destinationAddress);
+                    //System.Diagnostics.Debug.WriteLine(client.SearchRoute(originAddress, destinationAddress));
         }
     }
 }

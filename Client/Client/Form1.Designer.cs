@@ -32,6 +32,7 @@
             this.origin = new System.Windows.Forms.TextBox();
             this.destination = new System.Windows.Forms.TextBox();
             this.searchRoute = new System.Windows.Forms.Button();
+            this.result = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // selectCity
@@ -70,11 +71,20 @@
             this.searchRoute.UseVisualStyleBackColor = true;
             this.searchRoute.Click += new System.EventHandler(this.searchRoute_Click);
             // 
+            // result
+            // 
+            this.result.Location = new System.Drawing.Point(53, 222);
+            this.result.Multiline = true;
+            this.result.Name = "result";
+            this.result.Size = new System.Drawing.Size(571, 254);
+            this.result.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 290);
+            this.ClientSize = new System.Drawing.Size(659, 498);
+            this.Controls.Add(this.result);
             this.Controls.Add(this.searchRoute);
             this.Controls.Add(this.destination);
             this.Controls.Add(this.origin);
@@ -92,6 +102,7 @@
         private System.Windows.Forms.TextBox origin;
         private System.Windows.Forms.TextBox destination;
         private System.Windows.Forms.Button searchRoute;
+        private System.Windows.Forms.TextBox result;
     }
 }
 
