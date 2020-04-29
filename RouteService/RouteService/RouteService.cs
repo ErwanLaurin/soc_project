@@ -20,11 +20,14 @@ namespace RouteService
         public void InitCity(String city)
         {
             client.InitCity(city);
+            this.city = city;
         }
 
-        public void SearchRoute(String origin, String destination, String stations)
+        public String SearchRoute(String origin, String destination)
         {
+            dynamic stations = client.GetStations();
             Route route = new Route(origin, destination, stations);
+            return route.GetRoute();
         }
 
         public String[] GetCities()

@@ -16,7 +16,7 @@ namespace RouteService
         void InitCity(String city);
 
         [OperationContract]
-        void SearchRoute(String origin, String destination, String stations);
+        String SearchRoute(String origin, String destination);
 
         [OperationContract]
         String[] GetCities();

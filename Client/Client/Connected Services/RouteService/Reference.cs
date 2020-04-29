@@ -22,7 +22,7 @@ namespace Client.RouteService {
         void InitCity(string city);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouteService/SearchRoute", ReplyAction="http://tempuri.org/IRouteService/SearchRouteResponse")]
-        void SearchRoute(string origin, string destination, string stations);
+        string SearchRoute(string origin, string destination);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouteService/GetCities", ReplyAction="http://tempuri.org/IRouteService/GetCitiesResponse")]
         string[] GetCities();
@@ -63,8 +63,8 @@ namespace Client.RouteService {
             base.Channel.InitCity(city);
         }
         
-        public void SearchRoute(string origin, string destination, string stations) {
-            base.Channel.SearchRoute(origin, destination, stations);
+        public string SearchRoute(string origin, string destination) {
+            return base.Channel.SearchRoute(origin, destination);
         }
         
         public string[] GetCities() {

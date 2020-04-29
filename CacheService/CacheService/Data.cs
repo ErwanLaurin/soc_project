@@ -46,7 +46,7 @@ namespace CacheService
             UpdateStations(city);
         }
 
-        public String GetStations()
+        public dynamic GetStations()
         {
             return stations;
         }

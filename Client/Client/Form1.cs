@@ -34,16 +34,16 @@ namespace Client
 
         private void selectCity_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //client.InitCity(selectCity.SelectedItem.ToString());
+            client.InitCity(selectCity.SelectedItem.ToString());
         }
 
         private void searchRoute_Click(object sender, EventArgs e)
         {
             String originAddress = origin.Text;
             String destinationAddress = destination.Text;
-            System.Diagnostics.Debug.WriteLine(originAddress + " " + destinationAddress);
-            //if(!(String.Equals(originAddress, "Entrez une adresse de départ") && String.Equals(originAddress, "Entrez une adresse de destination")))
-                
+            //System.Diagnostics.Debug.WriteLine(originAddress + " " + destinationAddress);
+            if (!(String.Equals(originAddress, "Entrez une adresse de départ") && String.Equals(originAddress, "Entrez une adresse de destination")))
+                System.Diagnostics.Debug.WriteLine(client.SearchRoute(originAddress, destinationAddress));
         }
     }
 }

@@ -15,13 +15,25 @@ namespace RouteService
         private String destination;
         private JObject originPosition;
         private JObject destinationPosition;
-        private String stations;
+        private List<Station> stations;
 
         public Route(String origin, String destination, String stations)
         {
             this.origin = origin;
             this.destination = destination;
-            this.stations = stations;
+            this.stations = new List<Station>();
+            JObject[] array = JsonConvert.DeserializeObject<JObject[]>(stations);
+            System.Diagnostics.Debug.WriteLine(array);
+            foreach (var obj in array)
+            {
+                Station station = JsonConvert.DeserializeObject<Station>(obj.ToString());
+                this.stations.Add(station);
+            }
+        }
+
+        public String GetRoute()
+        {
+            return stations[0].name;   
         }
 
         public void GetPositions()
