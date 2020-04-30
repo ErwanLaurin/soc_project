@@ -78,7 +78,7 @@ namespace RouteService
                 Double distNum = Convert.ToDouble(dist);
                 if (String.Equals(unit, "km"))
                     distNum = distNum * 1000;
-                if (min < 0 || distNum < min)
+                if ((min < 0 || distNum < min) && Convert.ToInt32(stations[i].totalStands["availabilities"]["bikes"]) > 0)
                 {
                     min = distNum;
                     minDist = distance;
@@ -89,26 +89,7 @@ namespace RouteService
             nearest = stations[minIndex];
             return nearest;
         }
-
-        public void GetPositions()
-        {
-            String originFromServer = SendRequest("https://maps.googleapis.com/maps/api/geocode/json?address=" + origin + "&key="+apiKey);
-            String destinationFromServer = SendRequest("https://maps.googleapis.com/maps/api/geocode/json?address=" + destination + "&key="+apiKey);
-            dynamic obj1 = JsonConvert.DeserializeObject(originFromServer);
-            dynamic obj2 = JsonConvert.DeserializeObject(destinationFromServer);
-            originPosition = obj1.results[0].geometry.location;
-            destinationPosition = obj2.results[0].geometry.location;
-        }
-
-        public JObject GetOriginPosition()
-        {
-            return originPosition;
-        }
-
-        public JObject GetDestinationPosition()
-        {
-            return destinationPosition;
-        }
+      
 
         public String SendRequest(String url)
         {
