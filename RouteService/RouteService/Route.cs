@@ -35,16 +35,16 @@ namespace RouteService
         {
             Station start = NearestStation(origin);
             Station end = NearestStation(destination);
-            String startResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + origin + "&destinations=" + start + start.contractName + "&key=" + apiKey);
+            String startResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + origin + "&destinations=" + start.address + start.contractName + "&key=" + apiKey);
             JObject result1 = JsonConvert.DeserializeObject<JObject>(startResponse);
             System.Diagnostics.Debug.WriteLine(result1.ToString());
-            String endResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + end+ end.contractName + "&destinations=" + destination + "&key=" + apiKey);
+            String endResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + end.address+ end.contractName + "&destinations=" + destination + "&key=" + apiKey);
             JObject result2 = JsonConvert.DeserializeObject<JObject>(endResponse);
             System.Diagnostics.Debug.WriteLine(result2.ToString());
-            String bikeResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=bicycling&units=metric&origins=" + start+ start.contractName + "&destinations=" + end+end.contractName + "&key=" + apiKey);
+            String bikeResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=bicycling&units=metric&origins=" + start.address+ start.contractName + "&destinations=" + end.address+end.contractName + "&key=" + apiKey);
             JObject result3 = JsonConvert.DeserializeObject<JObject>(bikeResponse);
             System.Diagnostics.Debug.WriteLine(result3.ToString());
-            String route = "Départ : " + origin + ",\r\n marcher pendant " + result1["rows"][0]["elements"][0]["distance"]["text"].ToString() + " jusqu'à "+start.address+",\r\n prendre le vélo pendant "+result3["rows"][0]["elements"][0]["distance"]["text"].ToString()+"jusqu'à "+end.address+",\r\n puis marcher pendant "+ result2["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à " +destination+" (Arrivée).";
+            String route = "Départ : " + origin + ",\r\n marcher pendant " + result1["rows"][0]["elements"][0]["distance"]["text"].ToString() + " jusqu'à "+start.address+",\r\n prendre le vélo pendant "+result3["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à "+end.address+",\r\n puis marcher pendant "+ result2["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à " +destination+" (Arrivée).";
             return route;   
         }
 
@@ -55,7 +55,7 @@ namespace RouteService
             {
                 destinations += station.address + " " +station.contractName+ "|";
             }
-            //System.Diagnostics.Debug.WriteLine(destinations);
+            System.Diagnostics.Debug.WriteLine(destinations);
             String response = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + position + "&destinations=" + destinations + "&key=" + apiKey);
             JObject result = JsonConvert.DeserializeObject<JObject>(response);
             //System.Diagnostics.Debug.WriteLine(result);
@@ -72,11 +72,15 @@ namespace RouteService
                 String duration = obj["duration"]["text"].ToString();
                 String distance = obj["distance"]["text"].ToString();
                 String dist = distance.Split(' ').First();
+                String unit = distance.Split(' ')[1];
                 dist = dist.Replace(",", "");
                 dist = dist.Replace(".", ",");
                 Double distNum = Convert.ToDouble(dist);
+                if (String.Equals(unit, "km"))
+                    distNum = distNum * 1000;
                 if (min < 0 || distNum < min)
                 {
+                    min = distNum;
                     minDist = distance;
                     minDur = duration;
                     minIndex = i;
