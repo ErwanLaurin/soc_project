@@ -17,5 +17,10 @@ namespace RouteService
         public bool connected;
         public JObject totalStands;
         public JObject mainStands;
+
+        public String getPositionString()
+        {
+            return position["latitude"].ToString().Replace(",", ".") +","+position["longitude"].ToString().Replace(",", ".");
+        }
     }
 }

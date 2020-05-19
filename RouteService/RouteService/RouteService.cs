@@ -26,7 +26,7 @@ namespace RouteService
         public String SearchRoute(String origin, String destination)
         {
             dynamic stations = client.GetStations();
-            Route route = new Route(origin, destination, stations);
+            Route route = new Route(origin +" "+city, destination+" "+city, stations);
             return route.GetRoute();
         }
 

@@ -35,16 +35,16 @@ namespace RouteService
         {
             Station start = NearestStation(origin);
             Station end = NearestStation(destination);
-            String startResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + origin + "&destinations=" + start.address + start.contractName + "&key=" + apiKey);
+            String startResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + origin + "&destinations=" + start.getPositionString() + "&key=" + apiKey);
             JObject result1 = JsonConvert.DeserializeObject<JObject>(startResponse);
             System.Diagnostics.Debug.WriteLine(result1.ToString());
-            String endResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + end.address+ end.contractName + "&destinations=" + destination + "&key=" + apiKey);
+            String endResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + end.getPositionString() + "&destinations=" + destination + "&key=" + apiKey);
             JObject result2 = JsonConvert.DeserializeObject<JObject>(endResponse);
             System.Diagnostics.Debug.WriteLine(result2.ToString());
-            String bikeResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=bicycling&units=metric&origins=" + start.address+ start.contractName + "&destinations=" + end.address+end.contractName + "&key=" + apiKey);
+            String bikeResponse = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=bicycling&units=metric&origins=" + start.getPositionString() + "&destinations=" + end.getPositionString() + "&key=" + apiKey);
             JObject result3 = JsonConvert.DeserializeObject<JObject>(bikeResponse);
             System.Diagnostics.Debug.WriteLine(result3.ToString());
-            String route = "Départ : " + origin + ",\r\n marcher pendant " + result1["rows"][0]["elements"][0]["distance"]["text"].ToString() + " jusqu'à "+start.address+",\r\n prendre le vélo pendant "+result3["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à "+end.address+",\r\n puis marcher pendant "+ result2["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à " +destination+" (Arrivée).";
+            String route = "Départ : " + origin + ",\r\nmarcher pendant " + result1["rows"][0]["elements"][0]["distance"]["text"].ToString() + " jusqu'à "+start.address+",\r\nprendre le vélo pendant "+result3["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à "+end.address+",\r\npuis marcher pendant "+ result2["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à " +destination+" (Arrivée).";
             return route;   
         }
 
@@ -53,7 +53,7 @@ namespace RouteService
             String destinations = "";
             foreach(Station station in stations)
             {
-                destinations += station.address + " " +station.contractName+ "|";
+                destinations += station.getPositionString() + "|";
             }
             System.Diagnostics.Debug.WriteLine(destinations);
             String response = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + position + "&destinations=" + destinations + "&key=" + apiKey);

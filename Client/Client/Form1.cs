@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 
 namespace Client
 {
+    using GMap.NET.MapProviders;
     using RouteService;
     public partial class Form1 : Form
     {
@@ -45,6 +39,12 @@ namespace Client
             if (!(String.Equals(originAddress, "Entrez une adresse de départ") && String.Equals(originAddress, "Entrez une adresse de destination")))
                 result.Text = client.SearchRoute(originAddress, destinationAddress);
                     //System.Diagnostics.Debug.WriteLine(client.SearchRoute(originAddress, destinationAddress));
+        }
+
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+
         }
     }
 }
