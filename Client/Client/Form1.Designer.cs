@@ -95,6 +95,7 @@
             // 
             chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
             chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisY.IsStartedFromZero = false;
             chartArea1.AxisY.Title = "Altitude (m)";
             chartArea1.Name = "ChartArea1";
             this.elevationChart.ChartAreas.Add(chartArea1);
