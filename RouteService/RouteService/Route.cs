@@ -54,43 +54,55 @@ namespace RouteService
 
         public Station NearestStation(String position)
         {
-            String destinations = "";
-            foreach(Station station in stations)
-            {
-                destinations += station.getPositionString() + "|";
-            }
-            System.Diagnostics.Debug.WriteLine(destinations);
-            String response = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + position + "&destinations=" + destinations + "&key=" + apiKey);
-            JObject result = JsonConvert.DeserializeObject<JObject>(response);
-            //System.Diagnostics.Debug.WriteLine(result);
-            Station nearest;
             Double min = -1;
             String minDist;
             String minDur;
             int minIndex = -1;
             int i = -1;
-            foreach(JObject obj in result["rows"][0]["elements"])
+            int multiplier = 0;
+            while (true)
             {
-                i++;
-                //System.Diagnostics.Debug.WriteLine(obj.ToString());
-                String duration = obj["duration"]["text"].ToString();
-                String distance = obj["distance"]["text"].ToString();
-                String dist = distance.Split(' ').First();
-                String unit = distance.Split(' ')[1];
-                dist = dist.Replace(",", "");
-                dist = dist.Replace(".", ",");
-                Double distNum = Convert.ToDouble(dist);
-                if (String.Equals(unit, "km"))
-                    distNum = distNum * 1000;
-                if ((min < 0 || distNum < min) && Convert.ToInt32(stations[i].totalStands["availabilities"]["bikes"]) > 0)
+                String destinations = "";
+                for (int limit = 100*multiplier; limit < 100*(multiplier+1); limit++)// Station station in stations.GetRange(limit, 100))
                 {
-                    min = distNum;
-                    minDist = distance;
-                    minDur = duration;
-                    minIndex = i;
+                    destinations += stations[limit].getPositionString() + "|";
+                    System.Diagnostics.Debug.WriteLine(limit);
+                    if (limit == stations.Count-1)
+                    {
+                        System.Diagnostics.Debug.WriteLine("BREAK");
+                        break;
+                    }
                 }
+                multiplier++;
+                //System.Diagnostics.Debug.WriteLine(destinations);
+                String response = SendRequest("https://maps.googleapis.com/maps/api/distancematrix/json?mode=walking&units=metric&origins=" + position + "&destinations=" + destinations + "&key=" + apiKey);
+                JObject result = JsonConvert.DeserializeObject<JObject>(response);
+                //System.Diagnostics.Debug.WriteLine(result);
+                foreach (JObject obj in result["rows"][0]["elements"])
+                {
+                    i++;
+                    //System.Diagnostics.Debug.WriteLine(obj.ToString());
+                    String duration = obj["duration"]["text"].ToString();
+                    String distance = obj["distance"]["text"].ToString();
+                    String dist = distance.Split(' ').First();
+                    String unit = distance.Split(' ')[1];
+                    dist = dist.Replace(",", "");
+                    dist = dist.Replace(".", ",");
+                    Double distNum = Convert.ToDouble(dist);
+                    if (String.Equals(unit, "km"))
+                        distNum = distNum * 1000;
+                    if ((min < 0 || distNum < min) && Convert.ToInt32(stations[i].totalStands["availabilities"]["bikes"]) > 0)
+                    {
+                        min = distNum;
+                        minDist = distance;
+                        minDur = duration;
+                        minIndex = i;
+                    }
+                }
+                if (100*multiplier >= stations.Count)
+                    break;
             }
-            nearest = stations[minIndex];
+            Station nearest = stations[minIndex];
             return nearest;
         }
 
