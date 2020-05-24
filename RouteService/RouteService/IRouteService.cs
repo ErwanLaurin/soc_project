@@ -20,5 +20,9 @@ namespace RouteService
 
         [OperationContract]
         String[] GetCities();
+
+        [OperationContract]
+        List<String> GetElevation();
+            
     }
 }

@@ -11,6 +11,7 @@ namespace RouteService
     {
         CacheServiceClient client = new CacheServiceClient();
         String city;
+        Route route;
 
         public void InitCache()
         {
@@ -26,13 +27,18 @@ namespace RouteService
         public String SearchRoute(String origin, String destination)
         {
             dynamic stations = client.GetStations();
-            Route route = new Route(origin +" "+city, destination+" "+city, stations);
+            route = new Route(origin +" "+city, destination+" "+city, stations);
             return route.GetRoute();
         }
 
         public String[] GetCities()
         {
             return client.GetCities();
+        }
+
+        public List<String> GetElevation()
+        {
+            return route.GetElevation();
         }
     }
 }

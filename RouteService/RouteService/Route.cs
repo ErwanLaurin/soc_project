@@ -16,6 +16,7 @@ namespace RouteService
         private JObject originPosition;
         private JObject destinationPosition;
         private List<Station> stations;
+        private List<String> elevation;
         private String apiKey = "AIzaSyBFi_OOzvJwO0T1rAvScP18I_vQOL8mJS0";
 
         public Route(String origin, String destination, String stations)
@@ -23,6 +24,7 @@ namespace RouteService
             this.origin = origin;
             this.destination = destination;
             this.stations = new List<Station>();
+            this.elevation = new List<String>();
             JObject[] array = JsonConvert.DeserializeObject<JObject[]>(stations);
             foreach (var obj in array)
             {
@@ -45,6 +47,8 @@ namespace RouteService
             JObject result3 = JsonConvert.DeserializeObject<JObject>(bikeResponse);
             System.Diagnostics.Debug.WriteLine(result3.ToString());
             String route = "Départ : " + origin + ",\r\nmarcher pendant " + result1["rows"][0]["elements"][0]["distance"]["text"].ToString() + " jusqu'à "+start.address+",\r\nprendre le vélo pendant "+result3["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à "+end.address+",\r\npuis marcher pendant "+ result2["rows"][0]["elements"][0]["distance"]["text"].ToString()+" jusqu'à " +destination+" (Arrivée).";
+            String elevationResult = SendRequest("https://maps.googleapis.com/maps/api/elevation/json?path=" + start.getPositionString() + "|" + end.getPositionString() + "&samples=20&key=" + apiKey);
+            SetElevation(elevationResult);
             return route;   
         }
 
@@ -88,6 +92,22 @@ namespace RouteService
             }
             nearest = stations[minIndex];
             return nearest;
+        }
+
+        private void SetElevation(String response)
+        {
+            System.Diagnostics.Debug.WriteLine(response);
+            dynamic obj = JsonConvert.DeserializeObject(response);
+            
+            foreach (var e in obj.results)
+            {
+                this.elevation.Add(e.elevation.ToString());
+            }
+        }
+
+        public List<String> GetElevation()
+        {
+            return this.elevation;
         }
       
 

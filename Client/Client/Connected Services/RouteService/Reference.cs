@@ -26,6 +26,9 @@ namespace Client.RouteService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouteService/GetCities", ReplyAction="http://tempuri.org/IRouteService/GetCitiesResponse")]
         string[] GetCities();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouteService/GetElevation", ReplyAction="http://tempuri.org/IRouteService/GetElevationResponse")]
+        string[] GetElevation();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +72,10 @@ namespace Client.RouteService {
         
         public string[] GetCities() {
             return base.Channel.GetCities();
+        }
+        
+        public string[] GetElevation() {
+            return base.Channel.GetElevation();
         }
     }
 }

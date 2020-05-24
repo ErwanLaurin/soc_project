@@ -28,12 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.selectCity = new System.Windows.Forms.ComboBox();
             this.origin = new System.Windows.Forms.TextBox();
             this.destination = new System.Windows.Forms.TextBox();
             this.searchRoute = new System.Windows.Forms.Button();
             this.result = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.elevation = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.elevation)).BeginInit();
             this.SuspendLayout();
             // 
             // selectCity
@@ -48,23 +55,23 @@
             // 
             // origin
             // 
-            this.origin.Location = new System.Drawing.Point(53, 93);
+            this.origin.Location = new System.Drawing.Point(281, 85);
             this.origin.Name = "origin";
             this.origin.Size = new System.Drawing.Size(275, 22);
             this.origin.TabIndex = 1;
-            this.origin.Text = "Entrez une adresse de départ";
+            this.origin.Tag = "";
+            this.origin.TextChanged += new System.EventHandler(this.origin_TextChanged);
             // 
             // destination
             // 
-            this.destination.Location = new System.Drawing.Point(53, 132);
+            this.destination.Location = new System.Drawing.Point(281, 128);
             this.destination.Name = "destination";
             this.destination.Size = new System.Drawing.Size(275, 22);
             this.destination.TabIndex = 2;
-            this.destination.Text = "Entrez une adresse de destination";
             // 
             // searchRoute
             // 
-            this.searchRoute.Location = new System.Drawing.Point(149, 172);
+            this.searchRoute.Location = new System.Drawing.Point(377, 179);
             this.searchRoute.Name = "searchRoute";
             this.searchRoute.Size = new System.Drawing.Size(179, 23);
             this.searchRoute.TabIndex = 3;
@@ -84,11 +91,57 @@
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
+            // elevation
+            // 
+            chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
+            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisY.Title = "Altitude (m)";
+            chartArea1.Name = "ChartArea1";
+            this.elevation.ChartAreas.Add(chartArea1);
+            this.elevation.Location = new System.Drawing.Point(645, 200);
+            this.elevation.Name = "elevation";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Topologie du trajet en vélo";
+            this.elevation.Series.Add(series1);
+            this.elevation.Size = new System.Drawing.Size(651, 322);
+            this.elevation.TabIndex = 5;
+            this.elevation.Text = "chart1";
+            title1.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.TileFlipX;
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            title1.Name = "Title1";
+            title1.Text = "Topologie du trajet en vélo";
+            this.elevation.Titles.Add(title1);
+            this.elevation.Click += new System.EventHandler(this.elevation_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(50, 88);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(197, 17);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Entrez une adresse de départ";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(50, 131);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(225, 17);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Entrez une adresse de destination";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(647, 492);
+            this.ClientSize = new System.Drawing.Size(1308, 652);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.elevation);
             this.Controls.Add(this.result);
             this.Controls.Add(this.searchRoute);
             this.Controls.Add(this.destination);
@@ -96,6 +149,7 @@
             this.Controls.Add(this.selectCity);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.elevation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,6 +163,9 @@
         private System.Windows.Forms.Button searchRoute;
         private System.Windows.Forms.TextBox result;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart elevation;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
