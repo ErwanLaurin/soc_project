@@ -37,13 +37,14 @@ namespace Client
             //System.Diagnostics.Debug.WriteLine(selectCity.SelectedItem.ToString());
             if (!(selectCity.SelectedItem == null || String.Equals(originAddress, "") || String.Equals(destinationAddress, "")))
             {
+                elevationChart.Series[0].Points.Clear();
                 result.Text = client.SearchRoute(originAddress, destinationAddress);
                 String[] elevationResult = client.GetElevation();
                 //System.Diagnostics.Debug.WriteLine(elevationResult[0]);
                 int i = 0;
                 foreach(var val in elevationResult)
                 {
-                    elevation.Series[0].Points.AddXY(i, val.Replace(",", "."));
+                    elevationChart.Series[0].Points.AddXY(i, val.Replace(",", "."));
                     i++;
                 }
             }

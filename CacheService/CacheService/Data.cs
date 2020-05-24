@@ -14,6 +14,7 @@ namespace CacheService
         private List<String> cities;
         private String city;
         private String stations;
+        private Boolean update;
         private Timer aTimer;
 
 
@@ -24,6 +25,7 @@ namespace CacheService
             String responseFromServer = SendRequest("https://api.jcdecaux.com/vls/v3/contracts?apiKey=92f94affefba484f0cf2d1c44d26582943d7cee8");
             dynamic array = JsonConvert.DeserializeObject(responseFromServer);
             SetCities(array);
+            update = false;
             SetTimer();
         }
 
@@ -48,12 +50,18 @@ namespace CacheService
 
         public dynamic GetStations()
         {
+            if (update)
+            {
+                UpdateStations(city);
+            }
             return stations;
         }
 
         public void UpdateStations(String city)
         {
             stations = SendRequest("https://api.jcdecaux.com/vls/v3/stations?contract=" + city + "&apiKey=92f94affefba484f0cf2d1c44d26582943d7cee8");
+            update = false;
+            SetTimer();
         }
 
         public void SetTimer()
@@ -68,8 +76,8 @@ namespace CacheService
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            if(city != null)
-                UpdateStations(city);
+            update = true;
+            aTimer.Stop();
         }
 
         public String SendRequest(String url)

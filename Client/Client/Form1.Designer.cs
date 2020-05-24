@@ -37,10 +37,10 @@
             this.searchRoute = new System.Windows.Forms.Button();
             this.result = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.elevation = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.elevationChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.elevation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.elevationChart)).BeginInit();
             this.SuspendLayout();
             // 
             // selectCity
@@ -91,29 +91,29 @@
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // elevation
+            // elevationChart
             // 
             chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
             chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea1.AxisY.Title = "Altitude (m)";
             chartArea1.Name = "ChartArea1";
-            this.elevation.ChartAreas.Add(chartArea1);
-            this.elevation.Location = new System.Drawing.Point(645, 200);
-            this.elevation.Name = "elevation";
+            this.elevationChart.ChartAreas.Add(chartArea1);
+            this.elevationChart.Location = new System.Drawing.Point(645, 200);
+            this.elevationChart.Name = "elevationChart";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
             series1.Name = "Topologie du trajet en vélo";
-            this.elevation.Series.Add(series1);
-            this.elevation.Size = new System.Drawing.Size(651, 322);
-            this.elevation.TabIndex = 5;
-            this.elevation.Text = "chart1";
+            this.elevationChart.Series.Add(series1);
+            this.elevationChart.Size = new System.Drawing.Size(651, 322);
+            this.elevationChart.TabIndex = 5;
+            this.elevationChart.Text = "chart1";
             title1.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.TileFlipX;
             title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             title1.Name = "Title1";
             title1.Text = "Topologie du trajet en vélo";
-            this.elevation.Titles.Add(title1);
-            this.elevation.Click += new System.EventHandler(this.elevation_Click);
+            this.elevationChart.Titles.Add(title1);
+            this.elevationChart.Click += new System.EventHandler(this.elevation_Click);
             // 
             // label1
             // 
@@ -141,7 +141,7 @@
             this.ClientSize = new System.Drawing.Size(1308, 652);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.elevation);
+            this.Controls.Add(this.elevationChart);
             this.Controls.Add(this.result);
             this.Controls.Add(this.searchRoute);
             this.Controls.Add(this.destination);
@@ -149,7 +149,7 @@
             this.Controls.Add(this.selectCity);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.elevation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.elevationChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,7 +163,7 @@
         private System.Windows.Forms.Button searchRoute;
         private System.Windows.Forms.TextBox result;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart elevation;
+        private System.Windows.Forms.DataVisualization.Charting.Chart elevationChart;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
     }
